@@ -1,27 +1,19 @@
-import PhaserLogo from '../objects/phaserLogo'
-import FpsText from '../objects/fpsText'
+import Boid from "../objects/boid";
 
 export default class MainScene extends Phaser.Scene {
-  fpsText
-
+  boidArray: Boid[] = [];
   constructor() {
     super({ key: 'MainScene' })
   }
 
   create() {
-    new PhaserLogo(this, this.cameras.main.width / 2, 0)
-    this.fpsText = new FpsText(this)
-
-    // display the Phaser.VERSION
-    this.add
-      .text(this.cameras.main.width - 15, 15, `Phaser v${Phaser.VERSION}`, {
-        color: '#000000',
-        fontSize: '24px'
-      })
-      .setOrigin(1, 0)
+    for (let i = 0; i < 20; i++) {
+      const boid = new Boid(this, Math.random() * 100, Math.random() * 100);
+      this.boidArray.push(boid);
+    }
   }
 
   update() {
-    this.fpsText.update()
+    this.boidArray.forEach((boid) => boid.update());
   }
 }
